@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FinanCerto</string>
+    <string name="btn_entrar">Entrar</string>
+    <string name="txt_cadastro">Clique aqui para criar uma conta</string>
+    <string name="btn_continuar">Continuar</string>
+    <string name="btn_cadastrar">Cadastrar</string>
 </resources>

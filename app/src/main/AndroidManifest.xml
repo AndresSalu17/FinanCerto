@@ -13,6 +13,12 @@
         android:theme="@style/Theme.FinanCerto"
         tools:targetApi="31">
         <activity
+            android:name=".FinalizarCadastro"
+            android:exported="false" />
+        <activity
+            android:name=".IniciarCadastro"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
     </application>

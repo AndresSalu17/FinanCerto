@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".FinalizarCadastro">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/txt_cadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="205dp"
+        android:text="Cadastro"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+
+    <View
+        android:id="@+id/container_components"
+        style="@style/ContainerComponents2"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_cadastro"
+        android:layout_height="370dp"/>
+
+    <EditText
+        android:id="@+id/edit_senha"
+        style="@style/Edit_Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_senha"
+        android:hint="Digite sua senha"
+        android:inputType="textPassword"
+        android:textColor="#000000"
+        android:textColorHint="#808080"
+        app:layout_constraintEnd_toEndOf="@id/container_components"
+        app:layout_constraintStart_toStartOf="@id/container_components"
+        app:layout_constraintTop_toTopOf="@id/container_components" />
+
+    <EditText
+        android:id="@+id/edit_confirmar_senha"
+        style="@style/Edit_Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_senha"
+        android:hint="Confirme sua senha"
+        android:inputType="textPassword"
+        android:textColor="#000000"
+        android:textColorHint="#808080"
+        app:layout_constraintTop_toBottomOf="@+id/edit_senha"
+        tools:layout_editor_absoluteX="40dp" />
+
+    <TextView
+        android:id="@+id/text_regras_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A senha deve conter:"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/edit_confirmar_senha"
+        app:layout_constraintTop_toBottomOf="@id/edit_confirmar_senha"/>
+
+
+
+    <TextView
+        android:id="@+id/text_caracter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- Pelo menos 8 caracteres"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/edit_confirmar_senha"
+        app:layout_constraintTop_toBottomOf="@id/text_regras_senha"/>
+
+    <TextView
+        android:id="@+id/text_maiuscula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- Uma letra maiúscula"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/edit_confirmar_senha"
+        app:layout_constraintTop_toBottomOf="@id/text_caracter"/>
+
+
+    <TextView
+        android:id="@+id/text_especial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- Um caractér especial"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/edit_confirmar_senha"
+        app:layout_constraintTop_toBottomOf="@id/text_maiuscula"/>
+
+    <TextView
+        android:id="@+id/text_numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- Um número"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/edit_confirmar_senha"
+        app:layout_constraintTop_toBottomOf="@id/text_especial"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_Entrar"
+        style="@style/Button"
+        android:text="@string/btn_cadastrar"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_numero"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
