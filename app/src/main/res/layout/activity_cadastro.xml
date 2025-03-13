@@ -92,7 +92,7 @@
         tools:layout_editor_absoluteX="40dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_Entrar"
+        android:id="@+id/btn_continuar"
         style="@style/Button"
         android:text="@string/btn_continuar"
         android:layout_width="match_parent"
