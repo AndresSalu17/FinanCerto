@@ -38,7 +38,7 @@ public class FinalizarCadastro extends AppCompatActivity {
         Button btnCadastrar = findViewById(R.id.btn_cadastrar);
         btnCadastrar.setOnClickListener(view -> {
 
-            String nome = getIntent().getStringExtra("nome");
+            String nomeCompleto = getIntent().getStringExtra("nomeCompleto");
             String email = getIntent().getStringExtra("email");
             String senha = editSenha.getText().toString();
             String confirmarSenha = editConfirmarSenha.getText().toString();
@@ -63,7 +63,7 @@ public class FinalizarCadastro extends AppCompatActivity {
             }
 
             Log.d("Cadastro", "Chamada ao método cadastrarUsuario");
-            ConexaoFrontEnd.cadastrarUsuario(nome, email, senha);
+            ConexaoFrontEnd.cadastrarUsuario(nomeCompleto, email, senha);
             Intent intent = new Intent(this, TelaPrincipal.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
