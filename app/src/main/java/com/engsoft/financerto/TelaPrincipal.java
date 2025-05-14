@@ -2,6 +2,13 @@ package com.engsoft.financerto;
 
 import android.os.Bundle;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import android.graphics.Color;
+import java.util.ArrayList;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -22,6 +29,5 @@ public class TelaPrincipal extends AppCompatActivity {
         });
         getSupportActionBar().hide();
 
-        
     }
 }

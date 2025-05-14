@@ -4,4 +4,5 @@
     <string name="txt_cadastro">Clique aqui para criar uma conta</string>
     <string name="btn_continuar">Continuar</string>
     <string name="btn_cadastrar">Cadastrar</string>
+    <string name="btn_inserir">Inserir</string>
 </resources>
