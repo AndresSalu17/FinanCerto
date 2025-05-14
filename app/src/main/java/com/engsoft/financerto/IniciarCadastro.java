@@ -2,8 +2,6 @@ package com.engsoft.financerto;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PatternMatcher;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
@@ -46,8 +44,6 @@ public class IniciarCadastro extends AppCompatActivity {
             String email = editEmail.getText().toString();
             String confEmail = editConfEmail.getText().toString();
 
-            String nomeCompleto = editNome + " " + editSobreNome;
-
             if(TextUtils.isEmpty(nome)){
                 editNome.setError("Campo vazio!");
                 return;
@@ -79,9 +75,10 @@ public class IniciarCadastro extends AppCompatActivity {
                 return;
             }
 
+            String nomeCompleto = editNome.getText().toString() + " " + editSobreNome.getText().toString();
 
             Intent intent = new Intent(this, FinalizarCadastro.class);
-            intent.putExtra("nome", nome);
+            intent.putExtra("nomeCompleto", nomeCompleto);
             intent.putExtra("email", email);
             startActivity(intent);
         });

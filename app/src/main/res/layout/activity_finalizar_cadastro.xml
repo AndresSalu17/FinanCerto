@@ -109,7 +109,7 @@
         android:id="@+id/text_especial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="- Um caractér especial"
+        android:text="- Um caracter especial (@#$%^&amp;*+=!)"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:layout_marginTop="10dp"
