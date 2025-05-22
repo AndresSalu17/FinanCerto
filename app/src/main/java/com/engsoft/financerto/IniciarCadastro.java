@@ -75,10 +75,11 @@ public class IniciarCadastro extends AppCompatActivity {
                 return;
             }
 
-            String nomeCompleto = editNome.getText().toString() + " " + editSobreNome.getText().toString();
+            //String nomeCompleto = editNome.getText().toString() + " " + editSobreNome.getText().toString();
 
             Intent intent = new Intent(this, FinalizarCadastro.class);
-            intent.putExtra("nomeCompleto", nomeCompleto);
+            intent.putExtra("nome", nome);
+            intent.putExtra("sobreNome", sobreNome);
             intent.putExtra("email", email);
             startActivity(intent);
         });
