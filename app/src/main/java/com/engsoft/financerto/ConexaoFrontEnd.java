@@ -18,6 +18,7 @@ public class ConexaoFrontEnd {
     // URLS da sua API
     private static final String BASE_URL_CADASTRO = "https://finan-certo-api.onrender.com/usuarios/";
     private static final String BASE_URL_LOGIN = "https://finan-certo-api.onrender.com/api/gettoken/";
+    private static final String BASE_URL_ATT_FINANCAS = "https://finan-certo-api.onrender.com/financasusuario/";
 
     // Método genérico para configurar a conexão HTTP
     private static HttpURLConnection setupConnection(String urlString) throws IOException {
@@ -129,6 +130,24 @@ public class ConexaoFrontEnd {
             } catch (Exception e) {
                 Log.e("Login", "Erro na conexão: ", e);
                 callback.onError("Erro de conexão: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    public static void atualizarFinancas(double receitas, double despesas, double balaco){
+        Log.d("Atualização finanças", "Entrou no método de atualizar finanças.");
+
+        new Thread(() -> {
+            try{
+                HttpURLConnection conn = setupConnection(BASE_URL_ATT_FINANCAS);
+
+                JSONObject json = new JSONObject();
+                json.put();
+                json.put();
+                json.put();
+
+            }catch (Exception e) {
+                Log.e("Login", "Erro na conexão: ", e);
             }
         }).start();
     }
