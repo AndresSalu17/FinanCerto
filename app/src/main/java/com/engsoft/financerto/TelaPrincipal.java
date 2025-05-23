@@ -1,7 +1,10 @@
 package com.engsoft.financerto;
 
+import static com.engsoft.financerto.ConexaoFrontEnd.buscarFinancasUsuario;
+
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Toast;
 
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -34,11 +37,33 @@ public class TelaPrincipal extends AppCompatActivity {
         });
         getSupportActionBar().hide();
 
-        pieChart = findViewById(R.id.pieChart);
+        buscarFinancasUsuario(this, new ConexaoFrontEnd.FinancasCallback() {
+            @Override
+            public void onSuccess(int ano, int mes, double receitas, double despesas, double balanco) {
+                runOnUiThread(() -> {
+                    atualizarGrafico(receitas, despesas);
+                });
+            }
 
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() ->
+                        Toast.makeText(TelaPrincipal.this, "Erro ao buscar finanças: " + error, Toast.LENGTH_LONG).show()
+                );
+            }
+        });
+
+    }
+
+    private void atualizarGrafico(double receitas, double despesas) {
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(40f, "Despesas"));
-        entries.add(new PieEntry(60f, "Receitas"));
+
+        if (despesas > 0) {
+            entries.add(new PieEntry((float) despesas, "Despesas"));
+        }
+        if (receitas > 0) {
+            entries.add(new PieEntry((float) receitas, "Receitas"));
+        }
 
         PieDataSet dataSet = new PieDataSet(entries, "Categorias");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -54,4 +79,5 @@ public class TelaPrincipal extends AppCompatActivity {
         pieChart.animateY(1000);
         pieChart.invalidate();
     }
+
 }
