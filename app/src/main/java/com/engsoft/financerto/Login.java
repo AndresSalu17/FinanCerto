@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
                 return;
             }
 
-            ConexaoFrontEnd.loginUsuario(email, senha, new ConexaoFrontEnd.LoginCallback() {
+            ConexaoFrontEnd.loginUsuario(Login.this, email, senha,new ConexaoFrontEnd.LoginCallback() {
                 @Override
                 public void onSuccess(String message) {
                     runOnUiThread(() -> {
