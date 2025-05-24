@@ -1,12 +1,14 @@
-package com.engsoft.financerto;
+package com.engsoft.financerto.fluxoapp;
 
-import static com.engsoft.financerto.ConexaoFrontEnd.buscarFinancasUsuario;
+import static com.engsoft.financerto.conexaofrontend.FinancasConexao.buscarFinancasUsuario;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
 
+import com.engsoft.financerto.R;
+import com.engsoft.financerto.interfaces.FinancasCallback;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -37,7 +39,7 @@ public class TelaPrincipal extends AppCompatActivity {
         });
         getSupportActionBar().hide();
 
-        buscarFinancasUsuario(this, new ConexaoFrontEnd.FinancasCallback() {
+        buscarFinancasUsuario(this, new FinancasCallback() {
             @Override
             public void onSuccess(int ano, int mes, double receitas, double despesas, double balanco) {
                 runOnUiThread(() -> {
