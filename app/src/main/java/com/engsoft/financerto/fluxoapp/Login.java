@@ -1,4 +1,6 @@
-package com.engsoft.financerto;
+package com.engsoft.financerto.fluxoapp;
+
+import static com.engsoft.financerto.conexaofrontend.LoginConexao.loginUsuario;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.engsoft.financerto.R;
+import com.engsoft.financerto.interfaces.LoginCallback;
 
 public class Login extends AppCompatActivity {
 
@@ -66,7 +71,7 @@ public class Login extends AppCompatActivity {
                 return;
             }
 
-            ConexaoFrontEnd.loginUsuario(Login.this, email, senha,new ConexaoFrontEnd.LoginCallback() {
+            loginUsuario(Login.this, email, senha,new LoginCallback() {
                 @Override
                 public void onSuccess(String message) {
                     runOnUiThread(() -> {

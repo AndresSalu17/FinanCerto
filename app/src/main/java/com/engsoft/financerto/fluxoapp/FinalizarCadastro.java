@@ -1,6 +1,6 @@
-package com.engsoft.financerto;
+package com.engsoft.financerto.fluxoapp;
 
-import static com.engsoft.financerto.ConexaoFrontEnd.cadastrarUsuario;
+import static com.engsoft.financerto.conexaofrontend.CadastroConexao.cadastrarUsuario;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.engsoft.financerto.R;
+import com.engsoft.financerto.interfaces.CadastroCallback;
 
 public class FinalizarCadastro extends AppCompatActivity {
 
@@ -44,30 +48,41 @@ public class FinalizarCadastro extends AppCompatActivity {
             String senha = editSenha.getText().toString();
             String confirmarSenha = editConfirmarSenha.getText().toString();
 
-            if(TextUtils.isEmpty(senha)){
+            if (TextUtils.isEmpty(senha)) {
                 editSenha.setError("Campo vazio!");
                 return;
             }
 
-            if(TextUtils.isEmpty(confirmarSenha)){
+            if (TextUtils.isEmpty(confirmarSenha)) {
                 editConfirmarSenha.setError("Campo vazio!");
+                return;
             }
 
-            if(!senha.equals(confirmarSenha)){
-                editSenha.setError("As senha não coincidem!");
+            if (!senha.equals(confirmarSenha)) {
+                editSenha.setError("As senhas não coincidem!");
                 editConfirmarSenha.setError("As senhas não coincidem!");
+                return;
             }
 
-            if(!senhaValida(senha)){
+            if (!senhaValida(senha)) {
                 editSenha.setError("A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial!");
                 return;
             }
 
             Log.d("Cadastro", "Chamada ao método cadastrarUsuario");
-            ConexaoFrontEnd.cadastrarUsuario(nome, sobreNome, email, senha);
-            Intent intent = new Intent(this, TelaPrincipal.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            cadastrarUsuario(this, nome, sobreNome, email, senha, new CadastroCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    Intent intent = new Intent(FinalizarCadastro.this, TelaPrincipal.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onError(String error) {
+                    runOnUiThread(() -> Toast.makeText(FinalizarCadastro.this, "Erro ao cadastrar: " + error, Toast.LENGTH_LONG).show());
+                }
+            });
         });
     }
 
@@ -76,9 +91,5 @@ public class FinalizarCadastro extends AppCompatActivity {
                 senha.matches(".*[A-Z].*") &&
                 senha.matches(".*\\d.*") &&
                 senha.matches(".*[@#$%^&*+=!].*");
-    }
-    private void limparCampos () {
-        editSenha.setText("");
-        editConfirmarSenha.setText("");
     }
 }
