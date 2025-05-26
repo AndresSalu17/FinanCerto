@@ -5,11 +5,11 @@ import static com.engsoft.financerto.conexaofrontend.LoginConexao.loginUsuario;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onSuccess(String message) {
                     runOnUiThread(() -> {
-                        Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
+                        Log.d("Login", message);
                         // Redirecionar para a tela principal após login bem-sucedido
                         Intent intent = new Intent(Login.this, TelaPrincipal.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -93,7 +93,7 @@ public class Login extends AppCompatActivity {
                         } else if (error.toLowerCase().contains("senha")) {
                             editSenha.setError("Senha incorreta!");
                         } else {
-                            Toast.makeText(Login.this, error, Toast.LENGTH_LONG).show();
+                            Log.e("Login", error);
                         }
                         btnEntrar.setEnabled(true);
                     });

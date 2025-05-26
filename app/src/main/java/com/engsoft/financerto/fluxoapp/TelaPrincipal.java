@@ -39,47 +39,45 @@ public class TelaPrincipal extends AppCompatActivity {
         });
         getSupportActionBar().hide();
 
-        buscarFinancasUsuario(this, new FinancasCallback() {
-            @Override
-            public void onSuccess(int ano, int mes, double receitas, double despesas, double balanco) {
-                runOnUiThread(() -> {
-                    atualizarGrafico(receitas, despesas);
-                });
-            }
+//        buscarFinancasUsuario(this, new FinancasCallback() {
+//            @Override
+//            public void onSuccess(int ano, int mes, double receitas, double despesas, double balanco) {
+//                runOnUiThread(() -> {
+//                    atualizarGrafico(receitas, despesas);
+//                });
+//            }
+//
+//            @Override
+//            public void onError(String error) {
+//                runOnUiThread(() ->
+//                        Toast.makeText(TelaPrincipal.this, "Erro ao buscar finanças: " + error, Toast.LENGTH_LONG).show()
+//                );
+//            }
+//        });
+//    }
 
-            @Override
-            public void onError(String error) {
-                runOnUiThread(() ->
-                        Toast.makeText(TelaPrincipal.this, "Erro ao buscar finanças: " + error, Toast.LENGTH_LONG).show()
-                );
-            }
-        });
-
+//    private void atualizarGrafico(double receitas, double despesas) {
+//        ArrayList<PieEntry> entries = new ArrayList<>();
+//
+//        if (despesas > 0) {
+//            entries.add(new PieEntry((float) despesas, "Despesas"));
+//        }
+//        if (receitas > 0) {
+//            entries.add(new PieEntry((float) receitas, "Receitas"));
+//        }
+//
+//        PieDataSet dataSet = new PieDataSet(entries, "Categorias");
+//        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+//        dataSet.setValueTextColor(Color.WHITE);
+//        dataSet.setValueTextSize(16f);
+//
+//        PieData data = new PieData(dataSet);
+//
+//        pieChart.setData(data);
+//        pieChart.getDescription().setEnabled(false);
+//        pieChart.setCenterText("Finanças");
+//        pieChart.setBackgroundColor(Color.TRANSPARENT);
+//        pieChart.animateY(1000);
+//        pieChart.invalidate();
     }
-
-    private void atualizarGrafico(double receitas, double despesas) {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-
-        if (despesas > 0) {
-            entries.add(new PieEntry((float) despesas, "Despesas"));
-        }
-        if (receitas > 0) {
-            entries.add(new PieEntry((float) receitas, "Receitas"));
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Categorias");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextColor(Color.WHITE);
-        dataSet.setValueTextSize(16f);
-
-        PieData data = new PieData(dataSet);
-
-        pieChart.setData(data);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("Finanças");
-        pieChart.setBackgroundColor(Color.TRANSPARENT);
-        pieChart.animateY(1000);
-        pieChart.invalidate();
-    }
-
 }
