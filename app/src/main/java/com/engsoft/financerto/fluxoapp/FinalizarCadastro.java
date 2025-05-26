@@ -73,14 +73,14 @@ public class FinalizarCadastro extends AppCompatActivity {
             cadastrarUsuario(this, nome, sobreNome, email, senha, new CadastroCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    Intent intent = new Intent(FinalizarCadastro.this, TelaPrincipal.class);
+                    Intent intent = new Intent(FinalizarCadastro.this, Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
 
                 @Override
                 public void onError(String error) {
-                    runOnUiThread(() -> Toast.makeText(FinalizarCadastro.this, "Erro ao cadastrar: " + error, Toast.LENGTH_LONG).show());
+                    runOnUiThread(() -> Toast.makeText(FinalizarCadastro.this, error, Toast.LENGTH_SHORT).show());
                 }
             });
         });
