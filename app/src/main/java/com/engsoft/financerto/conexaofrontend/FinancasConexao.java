@@ -9,6 +9,7 @@ import android.util.Log;
 import com.engsoft.financerto.interfaces.FinancasCallback;
 
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -73,16 +74,26 @@ public class FinancasConexao {
 
                 if (responseCode == 200) {
                     JSONObject jsonResponse = new JSONObject(response);
-                    int ano = jsonResponse.optInt("FINANCAS_ANO");
-                    int mes = jsonResponse.optInt("MES_ATUAL");
-                    double receitas = jsonResponse.optDouble("FINANCAS_RECEITAS");
-                    double despesas = jsonResponse.optDouble("FINANCAS_DESPESAS");
-                    double balanco = jsonResponse.optDouble("FINANCAS_BALANCO");
+                    JSONArray results = jsonResponse.getJSONArray("results");
 
-                    callback.onSuccess(ano, mes, receitas, despesas, balanco);
+                    if (results.length() > 0) {
+                        JSONObject dados = results.getJSONObject(0);
+
+                        int ano = dados.optInt("FINANCAS_ANO");
+                        int mes = dados.optInt("MES_ATUAL");
+                        double receitas = dados.optDouble("FINANCAS_RECEITAS");
+                        double despesas = dados.optDouble("FINANCAS_DESPESAS");
+                        double balanco = dados.optDouble("FINANCAS_BALANCO");
+
+                        callback.onSuccess(ano, mes, receitas, despesas, balanco);
+                    } else {
+                        callback.onSuccess(0, 0, 0.0, 0.0, 0.0); // Nenhum dado encontrado
+                    }
                 } else {
                     callback.onError("Erro ao buscar dados financeiros.");
                 }
+
+                conn.disconnect();
 
             } catch (Exception e) {
                 Log.e("Finanças", "Erro na conexão de finanças (GET): ", e);
