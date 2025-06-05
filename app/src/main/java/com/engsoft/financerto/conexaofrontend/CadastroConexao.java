@@ -3,6 +3,7 @@ package com.engsoft.financerto.conexaofrontend;
 import static com.engsoft.financerto.conexaofrontend.HttpConexao.getResponse;
 import static com.engsoft.financerto.conexaofrontend.HttpConexao.sendRequest;
 import static com.engsoft.financerto.conexaofrontend.HttpConexao.setupConnection;
+import static com.engsoft.financerto.conexaofrontend.TokenConexao.salvarTokens;
 
 import android.content.Context;
 import android.os.Looper;
@@ -49,12 +50,26 @@ public class CadastroConexao {
                 Log.d("Cadastro", "Resposta do servidor: " + response);
 
                 handler.post(() -> {
-                    if (responseCode == 201) {
-                        callback.onSuccess(response);
-                    } else {
-                        callback.onError("Erro: " + response);
+                    try {
+                        if (responseCode == 201) {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String token = jsonResponse.optString("access", null);
+                            String refreshToken = jsonResponse.optString("refresh", null);
+
+                            if (token != null && refreshToken != null) {
+                                salvarTokens(context, token, refreshToken);
+                                Log.d("Cadastro", "Tokens salvos após cadastro.");
+                            }
+
+                            callback.onSuccess(response);
+                        } else {
+                            callback.onError("Erro: " + response);
+                        }
+                    } catch (Exception e) {
+                        callback.onError("Erro ao processar resposta do cadastro: " + e.getMessage());
                     }
                 });
+
 
             } catch (Exception e) {
                 Log.e("Cadastro", "Erro na conexão: ", e);

@@ -61,8 +61,8 @@ public class FinancasConexao {
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Content-Type", "application/json");
 
-                String token = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
-                        .getString("access", null);
+                String token = TokenConexao.getAccessToken(context);
+
                 if (token != null) {
                     conn.setRequestProperty("Authorization", "Bearer " + token);
                 }
