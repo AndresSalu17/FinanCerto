@@ -6,6 +6,8 @@ import static com.engsoft.financerto.conexaofrontend.HttpConexao.setupConnection
 import static com.engsoft.financerto.conexaofrontend.TokenConexao.salvarTokens;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.engsoft.financerto.interfaces.LoginCallback;
@@ -13,6 +15,8 @@ import com.engsoft.financerto.interfaces.LoginCallback;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class LoginConexao {
 
@@ -22,7 +26,10 @@ public class LoginConexao {
     public static void loginUsuario(Context context, String email, String senha, LoginCallback callback) {
         Log.d("Login", "Entrou no método loginUsuario!");
 
-        new Thread(() -> {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(() -> {
             try {
                 HttpURLConnection conn = setupConnection(BASE_URL_LOGIN);
 
@@ -38,27 +45,34 @@ public class LoginConexao {
                 Log.d("Login", "Response Code: " + responseCode);
                 Log.d("Login", "Resposta do servidor: " + response);
 
-                if (responseCode == 200) {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    String token = jsonResponse.optString("access", null);
-                    String refreshToken = jsonResponse.optString("refresh", null);
 
-                    if (token != null && refreshToken != null) {
-                        salvarTokens(context, token, refreshToken);
-                        callback.onSuccess(token);
-                    } else {
-                        callback.onError("Token não encontrado na resposta.");
+                handler.post(() -> {
+                    try {
+                        if (responseCode == 200) {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String token = jsonResponse.optString("access", null);
+                            String refreshToken = jsonResponse.optString("refresh", null);
+
+                            if (token != null && refreshToken != null) {
+                                salvarTokens(context, token, refreshToken);
+                                Log.d("Login", "Token salvo: " + token);
+                                callback.onSuccess(token);
+                            } else {
+                                callback.onError("Token não encontrado na resposta.");
+                            }
+                        } else {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String errorMessage = jsonResponse.optString("detail", "Erro desconhecido!");
+                            callback.onError(errorMessage);
+                        }
+                    } catch (Exception e) {
+                        callback.onError("Erro ao processar a resposta: " + e.getMessage());
                     }
-                } else {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    String errorMessage = jsonResponse.optString("detail", "Erro desconhecido!");
-                    callback.onError(errorMessage);
-                }
-
+                });
             } catch (Exception e) {
                 Log.e("Login", "Erro na conexão: ", e);
                 callback.onError("Erro de conexão: " + e.getMessage());
             }
-        }).start();
+        });
     }
 }

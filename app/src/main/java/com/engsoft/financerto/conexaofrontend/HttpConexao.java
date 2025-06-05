@@ -10,19 +10,19 @@ import java.net.URL;
 
 public class HttpConexao {
     // Método genérico para configurar a conexão HTTP
-    static HttpURLConnection setupConnection(String urlString) throws IOException {
+    public static HttpURLConnection setupConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setReadTimeout(10000);
-        conn.setConnectTimeout(15000);
+        conn.setConnectTimeout(50000);
         conn.setDoOutput(true);
         return conn;
     }
 
     // Envia o corpo JSON para a conexão
-    static void sendRequest(HttpURLConnection conn, String jsonInput) throws IOException {
+    public static void sendRequest(HttpURLConnection conn, String jsonInput) throws IOException {
         try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
             wr.writeBytes(jsonInput);
             wr.flush();
@@ -30,7 +30,7 @@ public class HttpConexao {
     }
 
     // Lê a resposta do servidor
-    static String getResponse(HttpURLConnection conn) throws IOException {
+    public static String getResponse(HttpURLConnection conn) throws IOException {
         InputStream inputStream = (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300)
                 ? conn.getInputStream()
                 : conn.getErrorStream();
